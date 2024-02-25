@@ -1,0 +1,58 @@
+{
+    "name": "henzeb/prompts-extras",
+    "description": "Extending Laravel Prompts",
+    "keywords": [
+        "laravel",
+        "prompt",
+        "prompts",
+        "busybox",
+        "watch"
+    ],
+    "homepage": "https://github.com/henzeb/prompts-extras",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Henze Berkheij",
+            "email": "henzeberkheij@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/prompts": "^0.1.15"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.3",
+        "mockery/mockery": "^1.5",
+        "phpstan/phpstan-mockery": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Henzeb\\Prompts\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Henzeb\\Prompts\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage-txt": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text",
+        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage",
+        "test-dox": "vendor/bin/phpunit --testdox"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
