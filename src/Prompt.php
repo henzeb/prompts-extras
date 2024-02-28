@@ -2,21 +2,38 @@
 
 namespace Henzeb\Prompts;
 
+use Henzeb\Prompts\Concerns\FakesInputOutput;
+use Henzeb\Prompts\Concerns\Interactivity;
+use Henzeb\Prompts\Concerns\Themes;
+use Laravel\Prompts\Output\ConsoleOutput;
 use Laravel\Prompts\Prompt as LaravelPrompt;
-use Laravel\Prompts\Themes\Default\Renderer;
-use Mockery\MockInterface;
-use Throwable;
+use Laravel\Prompts\Terminal;
+use RuntimeException;
+use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class Prompt extends LaravelPrompt
 {
-    protected static function setRenderer(
-        string      $renderer,
-        string        $theme = 'default'
-    ): void {
-        static::$themes[$theme ?? 'default'][static::class] = $renderer;
-    }
-    protected static function isFaked(): bool
+    use Interactivity;
+    use FakesInputOutput;
+    use Themes;
+
+    /**
+     * Get the value of the prompt.
+     */
+    public function value(): mixed
     {
-        return static::terminal() instanceof MockInterface;
+        return throw new RuntimeException('This prompt does not have a value.');
+    }
+
+    public static function output(): OutputInterface
+    {
+        return LaravelPrompt::output();
+    }
+
+    public static function resetOutput(): void
+    {
+        LaravelPrompt::$output = new ConsoleOutput();
+        LaravelPrompt::$terminal = new Terminal();
+        LaravelPrompt::$validateUsing = null;
     }
 }

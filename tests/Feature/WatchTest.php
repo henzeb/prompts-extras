@@ -1,12 +1,13 @@
 <?php
 
-
 use Henzeb\Prompts\Prompt;
 use Laravel\Prompts\Terminal;
 use Henzeb\Prompts\Watch;
 use function Laravel\Prompts\note;
 use function Laravel\Prompts\text;
 use function Henzeb\Prompts\watch;
+
+
 
 it('should render', function () {
     Prompt::fake();
@@ -141,17 +142,13 @@ it('should actually sleep at intervals', function () {
 });
 
 it('should throw exception when invoking fakeTimes when not faked', function () {
-    (function () {
-        Prompt::$terminal = new Terminal();
-    })->bindTo(null, Prompt::class)();
     Watch::fakeTimes(2);
 })->throws(RuntimeException::class);
 
-it('should throw exception when invoking assertSlept when not faked', function () {
-
-    (function () {
-        Prompt::$terminal = new Terminal();
-    })->bindTo(null, Prompt::class)();
-
+it('should throw exception when invoking assertSecondsSleptBetweenIntervals when not faked', function () {
     Watch::assertSecondsSleptBetweenIntervals(2);
+})->throws(RuntimeException::class);
+
+it('should throw exception when invoking shouldNotFakeIntervalSleep when not faked', function () {
+    Watch::shouldNotFakeIntervalSleep();
 })->throws(RuntimeException::class);

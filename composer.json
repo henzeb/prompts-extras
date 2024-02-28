@@ -23,8 +23,10 @@
         "laravel/prompts": "^0.1.15"
     },
     "require-dev": {
-        "pestphp/pest": "^2.3",
         "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^8.21",
+        "pestphp/pest": "^2.3",
+        "pestphp/pest-plugin-laravel": "^2.3",
         "phpstan/phpstan-mockery": "^1.1"
     },
     "autoload": {
@@ -32,20 +34,25 @@
             "Henzeb\\Prompts\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/output_helpers.php",
+            "src/input_helpers.php"
         ]
-
     },
     "autoload-dev": {
         "psr-4": {
-            "Henzeb\\Prompts\\Tests\\": "tests/"
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Henzeb\\Prompts\\Illuminate\\Providers\\PromptsExtrasProvider"
+            ]
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage-txt": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text",
-        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage",
-        "test-dox": "vendor/bin/phpunit --testdox"
+        "test": "vendor/bin/pest",
+        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage-html coverage"
     },
     "config": {
         "sort-packages": true,
@@ -54,5 +61,5 @@
         }
     },
     "prefer-stable": true,
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

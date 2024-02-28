@@ -102,14 +102,6 @@ class Watch extends Prompt
     }
 
     /**
-     * Get the value of the prompt.
-     */
-    public function value(): bool
-    {
-        return true;
-    }
-
-    /**
      * Tell Prompt how many iterations to fake.
      */
     public static function fakeTimes(int $times): void
