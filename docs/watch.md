@@ -27,6 +27,11 @@ watch(
 
 Note: `watch` ignores all interactive prompts that require user input.
 
+### cancelUsing
+
+Under the hood, to allow `cancelUsing` to function, it uses PCNTL. If you haven't
+installed the extension or are using it on Windows, you cannot use `cancelUsing`.
+
 ### Testing watch
 
 ### fakeTimes

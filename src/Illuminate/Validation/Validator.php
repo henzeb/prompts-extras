@@ -6,6 +6,7 @@ use Henzeb\Prompts\Inputs;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator as LaravelValidator;
 use Illuminate\Validation\ConditionalRules;
+use Illuminate\Validation\NestedRules;
 use Laravel\Prompts\Key;
 use Laravel\Prompts\Prompt as LaravelPrompt;
 use Ramsey\Uuid\Uuid;
@@ -15,6 +16,7 @@ use function Henzeb\Prompts\Input\argumentSet;
 use function Henzeb\Prompts\Input\optionSet;
 use function is_array;
 use function is_string;
+use function Pest\Laravel\instance;
 use function trans;
 
 class Validator
@@ -42,6 +44,7 @@ class Validator
             || !(is_string($rules)
                 || is_array($rules)
                 || $rules instanceof ConditionalRules
+                || $rules instanceof NestedRules
             )
         ) {
             return null;

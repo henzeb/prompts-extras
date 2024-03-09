@@ -4,6 +4,7 @@ namespace Henzeb\Prompts;
 
 use Henzeb\Prompts\Concerns\FakesInputOutput;
 use Henzeb\Prompts\Concerns\Interactivity;
+use Henzeb\Prompts\Concerns\Pcntl;
 use Henzeb\Prompts\Concerns\Themes;
 use Laravel\Prompts\Output\ConsoleOutput;
 use Laravel\Prompts\Prompt as LaravelPrompt;
@@ -14,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class Prompt extends LaravelPrompt
 {
     use Interactivity;
+    use Pcntl;
     use FakesInputOutput;
     use Themes;
 

@@ -24,10 +24,13 @@
     },
     "require-dev": {
         "mockery/mockery": "^1.5",
-        "orchestra/testbench": "^8.21",
+        "orchestra/testbench": "^8.19|9.0",
         "pestphp/pest": "^2.3",
         "pestphp/pest-plugin-laravel": "^2.3",
         "phpstan/phpstan-mockery": "^1.1"
+    },
+    "suggest": {
+        "ext-pcntl": "*"
     },
     "autoload": {
         "psr-4": {

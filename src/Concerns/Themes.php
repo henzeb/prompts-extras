@@ -6,11 +6,12 @@ use Laravel\Prompts\Prompt as LaravelPrompts;
 
 trait Themes
 {
-    protected static function setRenderer(
+    public static function setRenderer(
         string $renderer,
-        string $theme = 'default'
+        string $theme = 'default',
+        string $prompt = null
     ): void
     {
-        LaravelPrompts::$themes[$theme ?? 'default'][static::class] = $renderer;
+        LaravelPrompts::$themes[$theme ?? 'default'][$prompt ?? static::class] = $renderer;
     }
 }

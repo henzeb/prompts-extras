@@ -1,12 +1,10 @@
 <?php
 
 use Henzeb\Prompts\Prompt;
-use Laravel\Prompts\Terminal;
 use Henzeb\Prompts\Watch;
+use function Henzeb\Prompts\watch;
 use function Laravel\Prompts\note;
 use function Laravel\Prompts\text;
-use function Henzeb\Prompts\watch;
-
 
 
 it('should render', function () {

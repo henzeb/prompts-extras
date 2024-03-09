@@ -3,13 +3,8 @@
 namespace Henzeb\Prompts\Inputs;
 
 use Symfony\Component\Console\Input\Input;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputInterface;
 
-/**
- * @method string __toString()
- */
 class ConsoleInput extends Input
 {
     public function __construct(private readonly Input $input)
@@ -43,7 +38,7 @@ class ConsoleInput extends Input
 
     protected function parse(): void
     {
-       // This is unused as this is a proxy
+        // This is unused as this is a proxy
         $this->input->parse();
     }
 
@@ -57,7 +52,7 @@ class ConsoleInput extends Input
         return $this->input->hasParameterOption($values, $onlyParams);
     }
 
-    public function getParameterOption(array|string $values, float|array|bool|int|string|null $default = false, bool $onlyParams = false)
+    public function getParameterOption(array|string $values, float|array|bool|int|string|null $default = false, bool $onlyParams = false): mixed
     {
         return $this->input->getParameterOption($values, $default, $onlyParams);
     }
@@ -65,5 +60,10 @@ class ConsoleInput extends Input
     public function __call(string $name, array $arguments)
     {
         return $this->input->$name(...$arguments);
+    }
+
+    public function __toString(): string
+    {
+        return (string)$this->input;
     }
 }

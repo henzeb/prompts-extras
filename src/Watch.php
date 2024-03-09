@@ -3,14 +3,16 @@
 namespace Henzeb\Prompts;
 
 use Closure;
+use Henzeb\Prompts\Concerns\NonBlockingInput;
 use Henzeb\Prompts\Themes\Default\WatchRenderer;
-use Mockery\MockInterface;
 use PHPUnit\Framework\Assert;
 use RuntimeException;
 use ValueError;
 
 class Watch extends Prompt
 {
+    use NonBlockingInput;
+
     /**
      * How many times to fake an iteration.
      */
@@ -56,6 +58,7 @@ class Watch extends Prompt
 
         static::setRenderer(WatchRenderer::class);
     }
+
     /**
      * displays the watched output and updates after the specified interval.
      */
@@ -63,11 +66,21 @@ class Watch extends Prompt
     {
         $faked = static::isFaked();
 
+        $this->registerInterruptSignal();
+
         static::interactive(false);
+
+        $this->disableBlockingInput();
 
         while (!$faked || $this->fakedTimes < static::$fakeTimes) {
 
+            $this->handleKeyPresses();
+
             parent::render();
+
+            if (static::isPcntlSupported()) {
+                $this->hideCursor();
+            }
 
             if ($faked) {
                 $this->fakedTimes++;

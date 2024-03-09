@@ -1,13 +1,22 @@
 <?php
 
+
+use Laravel\Prompts\Prompt;
+use function Henzeb\Prompts\watch;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\note;
 use function Laravel\Prompts\progress;
 use function Laravel\Prompts\table;
 use function Laravel\Prompts\text;
-use function Henzeb\Prompts\watch;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+
+Prompt::cancelUsing(
+    function () {
+        info('bye...');
+    }
+);
 
 watch(
     render: function () {
