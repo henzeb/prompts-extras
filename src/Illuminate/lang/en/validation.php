@@ -54,6 +54,7 @@ return [
     'ipv4' => 'It must be a valid IPv4 address.',
     'ipv6' => 'It must be a valid IPv6 address.',
     'json' => 'It must be a valid JSON string.',
+    'list' => 'It   must be a list.',
     'lowercase' => 'It must be lowercase.',
     'lt' => [
         'array' => 'It must have less than :value items.',
