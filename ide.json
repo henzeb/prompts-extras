@@ -1,0 +1,140 @@
+{
+    "$schema": "https://laravel-ide.com/schema/laravel-ide-v2.json",
+    "completions": [
+        {
+            "complete": "validationRules",
+            "condition": [
+                {
+                    "functionFqn": [
+                        "Laravel\\Prompts\\text",
+                        "Laravel\\Prompts\\password",
+                        "Laravel\\Prompts\\select",
+                        "Laravel\\Prompts\\multiselect",
+                        "Laravel\\Prompts\\confirm",
+                        "Laravel\\Prompts\\suggest",
+                        "Laravel\\Prompts\\search",
+                        "Laravel\\Prompts\\multisearch",
+                        "Henzeb\\Prompts\\validated",
+                        "Henzeb\\Prompts\\Input\\addArgument",
+                        "Henzeb\\Prompts\\Input\\addOption",
+                        "Henzeb\\Prompts\\Input\\validateOptionUsing",
+                        "Henzeb\\Prompts\\Input\\validateArgumentUsing"
+                    ],
+                    "parameterNames": [
+                        "validate"
+                    ]
+                },
+                {
+                    "methodNames": [
+                        "with"
+                    ],
+                    "parameters": [
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "complete": "validationRule",
+            "condition": [
+                {
+                    "functionFqn": [
+                        "Laravel\\Prompts\\text",
+                        "Laravel\\Prompts\\password",
+                        "Laravel\\Prompts\\select",
+                        "Laravel\\Prompts\\multiselect",
+                        "Laravel\\Prompts\\confirm",
+                        "Laravel\\Prompts\\suggest",
+                        "Laravel\\Prompts\\search",
+                        "Laravel\\Prompts\\multisearch",
+                        "Henzeb\\Prompts\\validated",
+                        "Henzeb\\Prompts\\Input\\addArgument",
+                        "Henzeb\\Prompts\\Input\\addOption",
+                        "Henzeb\\Prompts\\Input\\validateOptionUsing",
+                        "Henzeb\\Prompts\\Input\\validateArgumentUsing"
+                    ],
+                    "parameterNames": [
+                        "validate"
+                    ],
+                    "place": "arrayValue"
+                },
+                {
+                    "classFqn": [
+                        "Henzeb\\Prompts\\Illuminate\\Validation\\Validate"
+                    ],
+                    "methodNames": [
+                        "with"
+                    ],
+                    "place": "arrayValue",
+                    "parameters": [
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "complete": "staticStrings",
+            "options": {
+                "strings": [
+                    "text",
+                    "password",
+                    "select",
+                    "multiselect",
+                    "confirm",
+                    "suggest",
+                    "search",
+                    "multisearch"
+                ]
+            },
+            "condition": [
+                {
+                    "classFqn": [
+                        "Henzeb\\Prompts\\Illuminate\\Validation\\Validate"
+                    ],
+                    "functionFqn": [
+                        "Henzeb\\Prompts\\validated",
+                        "Henzeb\\Prompts\\Input\\addArgument",
+                        "Henzeb\\Prompts\\Input\\addOption",
+                        "Henzeb\\Prompts\\Input\\validateOptionUsing",
+                        "Henzeb\\Prompts\\Input\\validateArgumentUsing"
+                    ],
+                    "parameterNames": [
+                        "prompt"
+                    ]
+                }
+            ]
+        },
+        {
+            "complete": "staticStrings",
+            "options": {
+                "strings": [
+                    "label",
+                    "placeholder",
+                    "default",
+                    "required",
+                    "validate",
+                    "hint",
+                    "options",
+                    "scroll",
+                    "yes",
+                    "no"
+                ]
+            },
+            "condition": [
+                {
+                    "functionFqn": [
+                        "Henzeb\\Prompts\\validated",
+                        "Henzeb\\Prompts\\Input\\addArgument",
+                        "Henzeb\\Prompts\\Input\\addOption",
+                        "Henzeb\\Prompts\\Input\\validateOptionUsing",
+                        "Henzeb\\Prompts\\Input\\validateArgumentUsing"
+                    ],
+                    "parameterNames": [
+                        "options"
+                    ],
+                    "place": "arrayKey"
+                }
+            ]
+        }
+    ]
+}

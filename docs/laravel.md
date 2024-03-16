@@ -106,3 +106,10 @@ text(
 ```
 
 Note: `messages` and `attributes` are optional.
+
+## Laravel Idea
+
+This package comes with an ide.json file that allows completion for validation rules
+and functions where a prompt can be specified. It also works for the options
+parameter that is used with the prompt parameter, where it will typehint the possible
+options as array-keys.
