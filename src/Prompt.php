@@ -2,6 +2,7 @@
 
 namespace Henzeb\Prompts;
 
+use Closure;
 use Henzeb\Prompts\Concerns\FakesInputOutput;
 use Henzeb\Prompts\Concerns\Interactivity;
 use Henzeb\Prompts\Concerns\Pcntl;
@@ -30,6 +31,21 @@ abstract class Prompt extends LaravelPrompt
     public static function output(): OutputInterface
     {
         return LaravelPrompt::output();
+    }
+
+    public static function validateUsing(Closure $callback): void
+    {
+        if (parent::$validateUsing) {
+            $validateUsing = clone parent::$validateUsing;
+            parent::validateUsing(
+                function ($value) use ($validateUsing, $callback) {
+                    return $callback($value) ?? $validateUsing($value);
+                }
+            );
+            return;
+        }
+
+        parent::validateUsing($callback);
     }
 
     public static function resetOutput(): void

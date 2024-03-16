@@ -22,4 +22,9 @@ class Validate
     {
         return new static(...func_get_args());
     }
+    
+    public function __toString(): string
+    {
+        return '';
+    }
 }

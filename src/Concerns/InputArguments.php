@@ -110,7 +110,7 @@ trait InputArguments
 
             $options['required'] = array_key_exists('required', $options) ? $options['required'] : $required;
 
-            $value = validated($value, $name, $required, $validate, $prompt, $options, $submit);
+            $value = validated($value, $name, $options['required'], $validate, $prompt, $options, $submit);
 
             return $validated[(string)static::currentCommand()][$name] = $value;
         };

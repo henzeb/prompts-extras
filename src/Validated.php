@@ -56,7 +56,7 @@ class Validated extends Prompt
             $parameters = [];
 
             static::writeDirectly(Key::ENTER);
-            static::moveCursor(0,-1);
+            static::moveCursor(0, -1);
 
             $reflection = new ReflectionMethod($this->prompt, '__construct');
 
@@ -82,12 +82,12 @@ class Validated extends Prompt
                 && $this->value === $parameters['default']
                 && $this->state === 'error'
             ) {
-                foreach($parameters['default'] as $key=>$default) {
+                foreach ($parameters['default'] as $key => $default) {
                     $this->value = [$default];
                     $this->validated = false;
                     $this->state = 'submit';
                     $this->submit();
-                    if($this->state === 'error') {
+                    if ($this->state === 'error') {
                         unset($parameters['default'][$key]);
                     }
                 }

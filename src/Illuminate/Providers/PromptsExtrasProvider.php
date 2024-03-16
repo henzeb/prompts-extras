@@ -80,6 +80,10 @@ class PromptsExtrasProvider extends ServiceProvider
                 $command->setCode(
                     (function (Input $input, OutputInterface $output) {
 
+                        Prompt::ValidateUsing(
+                            (new Validator())(...)
+                        );
+
                         CommandStack::add($this::class);
 
                         Inputs::setCommand(CommandStack::current());

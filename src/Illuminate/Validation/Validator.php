@@ -16,7 +16,6 @@ use function Henzeb\Prompts\Input\argumentSet;
 use function Henzeb\Prompts\Input\optionSet;
 use function is_array;
 use function is_string;
-use function Pest\Laravel\instance;
 use function trans;
 
 class Validator
