@@ -6,6 +6,7 @@ use function Henzeb\Prompts\watch;
 use function Laravel\Prompts\note;
 use function Laravel\Prompts\text;
 
+covers(Watch::class);
 
 it('should render', function () {
     Prompt::fake();

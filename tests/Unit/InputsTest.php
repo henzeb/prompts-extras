@@ -20,11 +20,11 @@ it('should not throw exceptions when binding option input', function () {
 
     addOption('confirm');
 
-})->expectNotToPerformAssertions();
+})->throwsNoExceptions();
 
 it('should not throw exceptions when binding argument input', function () {
     Inputs::fake(['test' => true]);
 
     addArgument('confirm');
 
-})->expectNotToPerformAssertions();
+})->throwsNoExceptions();

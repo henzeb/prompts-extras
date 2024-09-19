@@ -11,7 +11,6 @@ use Laravel\Prompts\Key;
 use Laravel\Prompts\Prompt as LaravelPrompt;
 use Ramsey\Uuid\Uuid;
 use WeakMap;
-use function collect;
 use function Henzeb\Prompts\Input\argumentSet;
 use function Henzeb\Prompts\Input\optionSet;
 use function is_array;
@@ -69,9 +68,7 @@ class Validator
             return null;
         }
 
-        return collect(
-            $errors->all()
-        )->join(Key::ENTER . '  ⚠ ');
+        return implode(Key::ENTER . '  ⚠ ', $errors->all());
     }
 
     protected function getInput(LaravelPrompt $prompt): array

@@ -1,68 +1,69 @@
 {
-    "name": "henzeb/prompts-extras",
-    "description": "Extending Laravel Prompts",
-    "keywords": [
-        "laravel",
-        "prompt",
-        "prompts",
-        "busybox",
-        "watch"
-    ],
-    "homepage": "https://github.com/henzeb/prompts-extras",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Henze Berkheij",
-            "email": "henzeberkheij@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^8.1",
-        "laravel/prompts": "^0.1.15"
+  "name": "henzeb/prompts-extras",
+  "description": "Extending Laravel Prompts",
+  "keywords": [
+    "laravel",
+    "prompt",
+    "prompts",
+    "busybox",
+    "watch"
+  ],
+  "homepage": "https://github.com/henzeb/prompts-extras",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Henze Berkheij",
+      "email": "henzeberkheij@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "laravel/prompts": "^0.1.15|^0.2.0|^0.3.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "^1.5",
+    "orchestra/testbench": "^8.19|9.0",
+    "pestphp/pest": "^2.3|^3",
+    "pestphp/pest-plugin-laravel": "^3",
+    "phpstan/phpstan-mockery": "^1.1"
+  },
+  "suggest": {
+    "ext-pcntl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Henzeb\\Prompts\\": "src/"
     },
-    "require-dev": {
-        "mockery/mockery": "^1.5",
-        "orchestra/testbench": "^8.19|9.0",
-        "pestphp/pest": "^2.3",
-        "pestphp/pest-plugin-laravel": "^2.3",
-        "phpstan/phpstan-mockery": "^1.1"
-    },
-    "suggest": {
-        "ext-pcntl": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Henzeb\\Prompts\\": "src/"
-        },
-        "files": [
-            "src/output_helpers.php",
-            "src/input_helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Henzeb\\Prompts\\Illuminate\\Providers\\PromptsExtrasProvider"
-            ]
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/pest",
-        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage-html coverage"
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "prefer-stable": true,
-    "minimum-stability": "stable"
+    "files": [
+      "src/output_helpers.php",
+      "src/input_helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Henzeb\\Prompts\\Illuminate\\Providers\\PromptsExtrasProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/pest",
+    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage-html coverage",
+    "test-mutations": "XDEBUG_MODE=coverage vendor/bin/pest --mutate --covered-only"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "prefer-stable": true,
+  "minimum-stability": "stable"
 }

@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
-
+covers(ConsoleInput::class);
 it('should return definition from input', function () {
     $definition = new InputDefinition();
     $input = new ArrayInput([], $definition);

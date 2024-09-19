@@ -14,7 +14,7 @@ it('Prompts do not have a value by default.', function () {
     (new class extends Prompt {
 
     })->value();
-})->expectException(RuntimeException::class);
+})->throws(RuntimeException::class);
 
 it('isFaked should return true when faked', function () {
     LaravelPrompt::fake();
