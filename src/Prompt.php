@@ -35,7 +35,7 @@ abstract class Prompt extends LaravelPrompt
 
     public static function validateUsing(Closure $callback): void
     {
-        if (parent::$validateUsing) {
+        if (!empty(parent::$validateUsing)) {
             $validateUsing = clone parent::$validateUsing;
             parent::validateUsing(
                 function ($value) use ($validateUsing, $callback) {
