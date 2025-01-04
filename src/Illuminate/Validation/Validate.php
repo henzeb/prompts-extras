@@ -10,6 +10,7 @@ class Validate
         public readonly mixed   $rules,
         public readonly array   $messages = [],
         public readonly ?string $attribute = null,
+        public readonly array   $data = [],
     )
     {
     }
@@ -18,11 +19,12 @@ class Validate
         mixed  $rules,
         array  $messages = [],
         string $attribute = null,
+        array  $data = [],
     ): static
     {
         return new static(...func_get_args());
     }
-    
+
     public function __toString(): string
     {
         return '';

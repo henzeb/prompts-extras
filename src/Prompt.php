@@ -7,6 +7,8 @@ use Henzeb\Prompts\Concerns\FakesInputOutput;
 use Henzeb\Prompts\Concerns\Interactivity;
 use Henzeb\Prompts\Concerns\Pcntl;
 use Henzeb\Prompts\Concerns\Themes;
+use Henzeb\Prompts\Illuminate\Validation\Validator;
+use Henzeb\Prompts\Illuminate\Validation\ValidatorFactory;
 use Laravel\Prompts\Output\ConsoleOutput;
 use Laravel\Prompts\Prompt as LaravelPrompt;
 use Laravel\Prompts\Terminal;
@@ -46,6 +48,20 @@ abstract class Prompt extends LaravelPrompt
         }
 
         parent::validateUsing($callback);
+    }
+
+    public static function useLaravelValidator(
+        string $locale = 'en',
+        string $path = null,
+        string $fallback = null,
+
+    ): void
+    {
+        self::validateUsing(
+            (new Validator(
+                new ValidatorFactory($locale, $path, $fallback),
+            ))(...)
+        );
     }
 
     public static function resetOutput(): void

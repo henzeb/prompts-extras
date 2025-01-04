@@ -43,7 +43,7 @@ it('should configure definitions', function () {
 
     $command->getDefinition()->getOption('confirm');
 
-})->expectNotToPerformAssertions();
+})->doesNotPerformAssertions();
 
 it('should isolate command definitions', function () {
 

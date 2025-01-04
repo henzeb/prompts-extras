@@ -3,26 +3,40 @@
 namespace Henzeb\Prompts\Illuminate\Validation;
 
 use Henzeb\Prompts\Inputs;
-use Illuminate\Support\Facades\Lang;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Validator as LaravelValidator;
+use Illuminate\Translation\CreatesPotentiallyTranslatedStrings;
+use Illuminate\Translation\Translator;
 use Illuminate\Validation\ConditionalRules;
+use Illuminate\Validation\Factory;
 use Illuminate\Validation\NestedRules;
 use Laravel\Prompts\Key;
 use Laravel\Prompts\Prompt as LaravelPrompt;
-use Ramsey\Uuid\Uuid;
 use WeakMap;
+use function collect;
 use function Henzeb\Prompts\Input\argumentSet;
 use function Henzeb\Prompts\Input\optionSet;
 use function is_array;
 use function is_string;
-use function trans;
+use function str_replace;
+use function uniqid;
+
 
 class Validator
 {
-    protected WeakMap $input;
+    use CreatesPotentiallyTranslatedStrings;
 
-    public function __construct()
+    public const NAMESPACE = 'prompts/extras::';
+
+    protected WeakMap $input;
+    protected Translator $translator;
+
+    public function __construct(
+        private ?Factory $factory = null
+    )
     {
+        $this->factory ??= LaravelValidator::getFacadeRoot();
+        $this->translator = $this->factory->getTranslator();
         $this->input = new WeakMap();
     }
 
@@ -30,11 +44,13 @@ class Validator
     {
         $rules = $prompt->validate;
         $messages = [];
-        $attribute = trans('prompts/extras::prompts.attribute');
+        $data = [];
+        $attribute = $this->translator->get(static::NAMESPACE . 'prompts.attribute');
 
         if ($prompt->validate instanceof Validate) {
             $rules = $prompt->validate->rules;
             $messages = $prompt->validate->messages;
+            $data = $prompt->validate->data;
             $attribute = $prompt->validate->attribute ?? $attribute;
         }
 
@@ -43,18 +59,24 @@ class Validator
                 || is_array($rules)
                 || $rules instanceof ConditionalRules
                 || $rules instanceof NestedRules
+                || $rules instanceof ValidationRule
             )
         ) {
             return null;
         }
 
-        $rulesName = $name = (string)Uuid::uuid4();
+        $rulesName = $name = str_replace(
+            '.',
+            '',
+            uniqid(prefix: 'field', more_entropy: true)
+        );
 
         if (is_array($prompt->value())) {
             $rulesName .= '.*';
         }
 
-        $errors = LaravelValidator::make(
+        $errors = $this->factory->make(
+            $data +
             $this->getInput($prompt)
             + [$name => $prompt->value()],
             [$rulesName => $rules],
@@ -68,7 +90,10 @@ class Validator
             return null;
         }
 
-        return implode(Key::ENTER . '  ⚠ ', $errors->all());
+        return collect(
+            $errors->all()
+        )->map(fn(string $error) => $error . ' ')
+            ->join(Key::ENTER . '  ⚠ ');
     }
 
     protected function getInput(LaravelPrompt $prompt): array
@@ -96,6 +121,6 @@ class Validator
 
     private function getMessages(array $messages): array
     {
-        return $messages + Lang::get('prompts/extras::validation');
+        return $messages + (array)$this->translator->get(static::NAMESPACE . 'validation');
     }
 }

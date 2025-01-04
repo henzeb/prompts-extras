@@ -3,12 +3,14 @@
 use Henzeb\Prompts\Prompt;
 use Illuminate\Console\BufferedConsoleOutput;
 use Illuminate\Console\OutputStyle;
+use Laravel\Prompts\Key;
 use Laravel\Prompts\Output\BufferedConsoleOutput as PromptsBufferedConsoleOutput;
 use Laravel\Prompts\Output\ConsoleOutput;
 use Laravel\Prompts\Prompt as LaravelPrompt;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use function Laravel\Prompts\text;
 
 
 it('Prompts do not have a value by default.', function () {
@@ -64,3 +66,13 @@ it('should not fail when setting validator outside of laravel context', function
 
     });
 })->doesNotPerformAssertions();
+
+it('should setup illuminate validator', function () {
+    Prompt::useLaravelValidator();
+
+    Prompt::fake(['a', Key::ENTER, Key::BACKSPACE, 0, Key::ENTER]);
+
+    text('test', validate: 'integer');
+
+    Prompt::assertOutputContains('⚠ It must be an integer.');
+});
