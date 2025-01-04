@@ -17,6 +17,7 @@ resource-constrained environments.
 ## Usage
 
 - [handling commandline arguments](docs/input.md)
+- [Validation](docs/validation.md)
 - [watch](docs/watch.md)
 - [Laravel](docs/laravel.md)
 
