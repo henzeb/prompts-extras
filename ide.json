@@ -140,6 +140,46 @@
                     "place": "arrayKey"
                 }
             ]
+        },
+        {
+            "complete": "staticStrings",
+            "options": {
+                "strings": [
+                    "reset",
+                    "bold",
+                    "dim",
+                    "italic",
+                    "underline",
+                    "inverse",
+                    "hidden",
+                    "strikethrough",
+                    "black",
+                    "red",
+                    "green",
+                    "yellow",
+                    "blue",
+                    "magenta",
+                    "cyan",
+                    "white",
+                    "bgBlack",
+                    "bgRed",
+                    "bgGreen",
+                    "bgYellow",
+                    "bgBlue",
+                    "bgMagenta",
+                    "bgCyan",
+                    "bgWhite",
+                    "gray"
+                ]
+            },
+            "condition": [
+                {
+                    "functionFqn": [
+                        "Henzeb\\Prompts\\format"
+                    ],
+                    "place": "parameter"
+                }
+            ]
         }
     ]
 }

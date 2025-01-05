@@ -2,6 +2,7 @@
 <?php
 
 use Henzeb\Prompts\Illuminate\Validation\Validate;
+use Henzeb\Prompts\Support\Formatter;
 use Illuminate\Support\Str;
 use function Henzeb\Prompts\Input\addArgument;
 use function Henzeb\Prompts\Input\argument;
@@ -61,6 +62,15 @@ $promptableFunctions = $functions->filter(
             fn(ReflectionParameter $parameter) => $parameter->name === 'prompt')
     )
 );
+
+$formatOptions = collect((new ReflectionClass(Formatter::class))->getTraits())
+    ->map(function (ReflectionClass $trait) {
+        return collect($trait->getMethods(ReflectionMethod::IS_PUBLIC))->map(
+            function (ReflectionMethod $method) {
+                return $method->getName();
+            }
+        );
+    })->flatten();
 
 $ideJson = [
     '$schema' => 'https://laravel-ide.com/schema/laravel-ide-v2.json',
@@ -122,6 +132,20 @@ $ideJson = [
                     'functionFqn' => $promptableFunctions->values(),
                     'parameterNames' => ['options'],
                     'place' => 'arrayKey',
+                ]
+            ]
+        ],
+        [
+            'complete' => 'staticStrings',
+            'options' => [
+                'strings' => $formatOptions->values()
+            ],
+
+            'condition' => [
+                [
+                    'functionFqn' => ['Henzeb\\Prompts\\format'],
+                    //                   'parameterNames' => ['with'],
+                    'place' => 'parameter',
                 ]
             ]
         ]

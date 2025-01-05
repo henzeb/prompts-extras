@@ -10,6 +10,7 @@ use Laravel\Prompts\Prompt as LaravelPrompt;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use function Henzeb\Prompts\format;
 use function Laravel\Prompts\text;
 
 
@@ -75,4 +76,14 @@ it('should setup illuminate validator', function () {
     text('test', validate: 'integer');
 
     Prompt::assertOutputContains('⚠ It must be an integer.');
+});
+
+it('should render format with bold text', function () {
+    $formatted = format('bold text', 'bold');
+    expect($formatted)->toBe('[1mbold text[22m');
+});
+
+it('should render format with green strikethrough text', function () {
+    $formatted = format('bold text', 'green', 'strikethrough');
+    expect($formatted)->toBe('[9m[32mbold text[39m[29m');
 });

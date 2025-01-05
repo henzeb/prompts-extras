@@ -10,7 +10,8 @@ Below code will repeatedly update a table with the current timestamp. You can
 end it by pressing CTRL+C.
 
 ```php
-use function Henzeb\Prompts\watch;use function Laravel\Prompts\table;
+use function Henzeb\Prompts\watch;
+use function Laravel\Prompts\table;
 
 watch(
     render: function () {
