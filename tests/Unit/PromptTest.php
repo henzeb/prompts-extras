@@ -68,7 +68,7 @@ it('should not fail when setting validator outside of laravel context', function
     });
 })->doesNotPerformAssertions();
 
-it('should setup illuminate validator', function () {
+it('should setup illuminate validator', function (): void {
     Prompt::useLaravelValidator();
 
     Prompt::fake(['a', Key::ENTER, Key::BACKSPACE, 0, Key::ENTER]);
@@ -85,5 +85,6 @@ it('should render format with bold text', function () {
 
 it('should render format with green strikethrough text', function () {
     $formatted = format('bold text', 'green', 'strikethrough');
+    
     expect($formatted)->toBe('[9m[32mbold text[39m[29m');
 });

@@ -52,9 +52,8 @@ abstract class Prompt extends LaravelPrompt
 
     public static function useLaravelValidator(
         string $locale = 'en',
-        string $path = null,
-        string $fallback = null,
-
+        ?string $path = null,
+        ?string $fallback = null
     ): void
     {
         self::validateUsing(

@@ -10,7 +10,7 @@ use Throwable;
 
 class TranslatorFactory
 {
-    public function make(string $locale, string $path = null, string $fallback = null): Translator
+    public function make(string $locale, ?string $path = null, ?string $fallback = null): Translator
     {
         try {
             $filesystem = new Filesystem();

@@ -82,7 +82,7 @@ it('should render buffered', function () {
 it('should fake sleep when faking', function (
     int $expected,
     int $iteration,
-    int $interval = null
+    ?int $interval = null
 ) {
     Prompt::fake();
 

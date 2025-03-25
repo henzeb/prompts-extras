@@ -69,11 +69,12 @@ it('´should validate early', function () {
         ->expectsQuestion('confirm', 'yes');
 });
 
-it('´should isolate input and output between commands', function () {
+it('should isolate input and output between commands', function () {
 
     $this->registerCommands();
-
-    Artisan::call('second', ['engine' => 'electric', '--enable' => true], $buffer = new BufferedConsoleOutput());
+    
+    $buffer = new BufferedConsoleOutput();
+    Artisan::call('second', ['engine' => 'electric', '--enable' => true], $buffer);
 
     $content = $buffer->fetch();
 
