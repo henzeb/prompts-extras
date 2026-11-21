@@ -3,9 +3,9 @@
 namespace Tests\Unit\Illuminate\Stubs;
 
 use Illuminate\Console\Command;
+
 use function Henzeb\Prompts\Input\addArgument;
 use function Henzeb\Prompts\Input\addOption;
-
 
 class FirstTestCommand extends Command
 {

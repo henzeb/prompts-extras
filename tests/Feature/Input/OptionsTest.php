@@ -6,6 +6,7 @@ use Laravel\Prompts\Key;
 use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\CompletionSuggestions;
 use Symfony\Component\Console\Input\InputOption;
+
 use function Henzeb\Prompts\Input\addOption;
 use function Henzeb\Prompts\Input\option;
 use function Henzeb\Prompts\Input\optionSet;
@@ -52,7 +53,7 @@ it('should pass option', function () {
     Prompt::fake();
     Inputs::fake(['--test' => 'value']);
 
-    addOption('test', validate: fn($value) => $value !== 'value' ? 'invalid' : null);
+    addOption('test', validate: fn ($value) => $value !== 'value' ? 'invalid' : null);
 
     expect(option('test'))->toBe('value');
 });
@@ -61,9 +62,10 @@ it('should return option twice, validate once', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake(['--test' => 'val']);
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     expect(option('test'))->toBe('value')
@@ -75,7 +77,7 @@ it('should not prompt for value', function () {
     Prompt::fake();
     Inputs::fake();
 
-    addOption('test', validate: fn($value) => $value !== 'value' ? 'invalid' : null);
+    addOption('test', validate: fn ($value) => $value !== 'value' ? 'invalid' : null);
 
     option('test');
 })->expectNotToPerformAssertions();
@@ -84,9 +86,10 @@ it('should prompt for no value', function () {
     Prompt::fake(['value', Key::ENTER]);
     Inputs::fake(['--test' => null]);
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     option('test');
@@ -96,9 +99,10 @@ it('should prompt for invalid value', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake(['--test' => 'val']);
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     option('test');
@@ -109,9 +113,10 @@ it('should prompt for value when required', function () {
     Prompt::fake(['value', Key::ENTER]);
     Inputs::fake();
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null,
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null,
         options: [
             'required' => true
         ]
@@ -124,9 +129,10 @@ it('should validate when changed', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake();
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     setOption('test', 'val');
@@ -136,9 +142,10 @@ it('should validate when changed externally', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake();
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     Inputs::input()->setOption('test', 'val');
@@ -150,14 +157,16 @@ it('should validate when multiple options', function () {
     Prompt::fake(['lue', Key::ENTER, 'ue', Key::ENTER]);
     Inputs::fake();
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
-    addOption('test2',
+    addOption(
+        'test2',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     setOptions([
@@ -170,9 +179,10 @@ it('should validate early', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake(['--test' => 'val']);
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null,
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null,
         validateEarly: true,
     );
 
@@ -183,9 +193,10 @@ it('should validate early and update option', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake(['--test' => 'val']);
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null,
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null,
         validateEarly: true,
     );
 
@@ -198,9 +209,10 @@ it('should not validate while validate early', function () {
     Prompt::fake();
     Inputs::fake(['--test' => 'val']);
 
-    addOption('test',
+    addOption(
+        'test',
         mode: InputOption::VALUE_OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null,
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null,
         validateEarly: false,
     );
 
@@ -222,7 +234,3 @@ it('should return false when option not set', function () {
 
     expect(optionSet('test'))->toBeFalse();
 });
-
-
-
-

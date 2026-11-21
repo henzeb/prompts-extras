@@ -2,6 +2,7 @@
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+
 use function Henzeb\Prompts\Input\addArgument;
 use function Henzeb\Prompts\Input\addOption;
 use function Henzeb\Prompts\Input\argument;
@@ -16,7 +17,7 @@ require __DIR__ . '/../vendor/autoload.php';
 addArgument(
     'name',
     mode: InputArgument::OPTIONAL,
-    validate: fn($value) => match (true) {
+    validate: fn ($value) => match (true) {
         strlen($value) < 3 => 'The name must be at least 3 characters.',
         strlen($value) > 255 => 'The name must not exceed 255 characters.',
         default => null
@@ -62,8 +63,3 @@ info('confirmed: ' . option('confirm'));
 if (optionSet('optional')) {
     info('optional answer: ' . option('optional'));
 }
-
-
-
-
-

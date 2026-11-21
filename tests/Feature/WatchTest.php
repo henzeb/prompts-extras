@@ -2,6 +2,7 @@
 
 use Henzeb\Prompts\Prompt;
 use Henzeb\Prompts\Watch;
+
 use function Henzeb\Prompts\watch;
 use function Laravel\Prompts\note;
 use function Laravel\Prompts\text;
@@ -34,7 +35,7 @@ it('should ignore interactive prompts', function () {
 it('should render callable array', function () {
     Prompt::fake();
 
-    $watch = new class() {
+    $watch = new class () {
         public function watch(): void
         {
             note('This should render through array');
@@ -51,7 +52,7 @@ it('should render callable array', function () {
 it('should render invokable', function () {
     Prompt::fake();
 
-    $watch = new class() {
+    $watch = new class () {
         public function __invoke(): void
         {
             note('This should render through invokable');
@@ -72,7 +73,7 @@ it('should render buffered', function () {
 
         note('This should not render');
 
-        (fn() => Watch::output())
+        (fn () => Watch::output())
             ->bindTo(null, Watch::class)()->fetch();
     });
 
@@ -104,7 +105,7 @@ it('should fake sleep when faking', function (
 it('should throw exception with a negative interval ', function () {
     Prompt::fake();
 
-    watch(fn() => null, -1);
+    watch(fn () => null, -1);
 
 })->throws(ValueError::class);
 

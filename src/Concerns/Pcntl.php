@@ -19,7 +19,7 @@ trait Pcntl
             pcntl_signal(SIGINT, function () {
 
                 $this->moveCursor(-2);
-                
+
                 $result = isset(static::$cancelUsing) ? (static::$cancelUsing)() : null;
                 $this->__destruct();
 

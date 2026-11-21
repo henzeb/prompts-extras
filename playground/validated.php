@@ -10,7 +10,7 @@ $confirm = validated(
     value: $value,
     label: 'Please confirm',
     required: true,
-    validate: fn($value) => match (true) {
+    validate: fn ($value) => match (true) {
         is_string($value) => $value === 'yes' ? null : 'must be yes.',
         default => null,
     },

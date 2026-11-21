@@ -9,8 +9,7 @@ class CurrentCommand implements Stringable
     public function __construct(
         public readonly int    $position,
         public readonly string $name
-    )
-    {
+    ) {
     }
 
     public function __toString(): string

@@ -2,6 +2,7 @@
 
 
 use Laravel\Prompts\Prompt;
+
 use function Henzeb\Prompts\watch;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\note;

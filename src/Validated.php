@@ -29,8 +29,7 @@ class Validated extends Prompt
         string|callable    $prompt = 'text',
         protected array    $options = [],
         protected bool     $submit = false,
-    )
-    {
+    ) {
         $this->prompt = $this->determineCorrectPrompt($prompt);
     }
 

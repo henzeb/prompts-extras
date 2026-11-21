@@ -12,8 +12,7 @@ class ValidatorFactory extends Factory
         string  $locale,
         ?string $path,
         ?string $fallback
-    )
-    {
+    ) {
         parent::__construct(
             $this->loadTranslator($locale, $path, $fallback)
         );

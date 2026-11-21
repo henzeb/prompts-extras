@@ -6,6 +6,7 @@ use Laravel\Prompts\Key;
 use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\CompletionSuggestions;
 use Symfony\Component\Console\Input\InputArgument;
+
 use function Henzeb\Prompts\Input\addArgument;
 use function Henzeb\Prompts\Input\Argument;
 use function Henzeb\Prompts\Input\argumentSet;
@@ -52,7 +53,7 @@ it('should pass argument', function () {
     Prompt::fake();
     Inputs::fake(['test' => 'value']);
 
-    addArgument('test', validate: fn($value) => $value !== 'value' ? 'invalid' : null);
+    addArgument('test', validate: fn ($value) => $value !== 'value' ? 'invalid' : null);
 
     expect(argument('test'))->toBe('value');
 });
@@ -61,9 +62,10 @@ it('should return argument twice, validate once', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake(['test' => 'val']);
 
-    addArgument('test',
+    addArgument(
+        'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     expect(argument('test'))->toBe('value')
@@ -75,7 +77,7 @@ it('should prompt for value', function () {
     Prompt::fake(['value', Key::ENTER]);
     Inputs::fake();
 
-    addArgument('test', validate: fn($value) => $value !== 'value' ? 'invalid' : null);
+    addArgument('test', validate: fn ($value) => $value !== 'value' ? 'invalid' : null);
 
     argument('test');
 });
@@ -87,7 +89,7 @@ it('should prompt for no value', function () {
     addArgument(
         'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     argument('test');
@@ -97,9 +99,10 @@ it('should prompt for invalid value', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake(['test' => 'val']);
 
-    addArgument('test',
+    addArgument(
+        'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     argument('test');
@@ -109,9 +112,10 @@ it('should validate when changed', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake();
 
-    addArgument('test',
+    addArgument(
+        'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     setArgument('test', 'val');
@@ -121,9 +125,10 @@ it('should validate when changed externally', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake();
 
-    addArgument('test',
+    addArgument(
+        'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     Inputs::input()->setArgument('test', 'val');
@@ -135,14 +140,16 @@ it('should validate when multiple arguments', function () {
     Prompt::fake(['lue', Key::ENTER, 'ue', Key::ENTER]);
     Inputs::fake();
 
-    addArgument('test',
+    addArgument(
+        'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
-    addArgument('test2',
+    addArgument(
+        'test2',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null
     );
 
     setArguments([
@@ -155,9 +162,10 @@ it('should validate early', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake(['test' => 'val']);
 
-    addArgument('test',
+    addArgument(
+        'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null,
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null,
         validateEarly: true,
     );
 
@@ -168,9 +176,10 @@ it('should validate early and update argument', function () {
     Prompt::fake(['ue', Key::ENTER]);
     Inputs::fake(['test' => 'val']);
 
-    addArgument('test',
+    addArgument(
+        'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null,
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null,
         validateEarly: true,
     );
 
@@ -183,9 +192,10 @@ it('should not validate while validate early', function () {
     Prompt::fake();
     Inputs::fake(['test' => 'val']);
 
-    addArgument('test',
+    addArgument(
+        'test',
         mode: InputArgument::OPTIONAL,
-        validate: fn($value) => $value !== 'value' ? 'invalid' : null,
+        validate: fn ($value) => $value !== 'value' ? 'invalid' : null,
         validateEarly: false,
     );
 
@@ -207,7 +217,3 @@ it('should return false when argument not set', function () {
 
     expect(optionSet('test'))->toBeFalse();
 });
-
-
-
-

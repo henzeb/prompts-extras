@@ -5,6 +5,7 @@ namespace Henzeb\Prompts\Concerns;
 use Closure;
 use Henzeb\Prompts\Inputs;
 use Symfony\Component\Console\Input\InputArgument;
+
 use function array_key_exists;
 use function Henzeb\Prompts\Input\validateArgumentUsing;
 use function Henzeb\Prompts\validated;
@@ -26,8 +27,7 @@ trait InputArguments
         string|callable|null             $prompt = 'text',
         array                            $options = [],
         bool                             $submit = false,
-    ): void
-    {
+    ): void {
         $args = func_get_args();
 
         Inputs::definition()->addArgument(new InputArgument(...$args));
@@ -81,10 +81,8 @@ trait InputArguments
         ?string $prompt = 'text',
         array   $options = [],
         bool    $submit = false,
-    ): void
-    {
-        $validated = function (mixed $value)
-        use (
+    ): void {
+        $validated = function (mixed $value) use (
             $name,
             $validate,
             $prompt,

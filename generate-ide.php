@@ -4,6 +4,7 @@
 use Henzeb\Prompts\Illuminate\Validation\Validate;
 use Henzeb\Prompts\Support\Formatter;
 use Illuminate\Support\Str;
+
 use function Henzeb\Prompts\Input\addArgument;
 use function Henzeb\Prompts\Input\argument;
 
@@ -16,15 +17,16 @@ addArgument(
 
 $functions = collect(get_defined_functions()['user'])
     ->filter(
-        fn($str) => str_starts_with($str, 'laravel\prompts')
+        fn ($str) => str_starts_with($str, 'laravel\prompts')
             || str_starts_with($str, 'henzeb\prompts')
-    )->map(fn($function) => (new ReflectionFunction($function))->getName());
+    )->map(fn ($function) => (new ReflectionFunction($function))->getName());
 
 $validatableFunctions = $functions->filter(
-    fn($str) => count(
+    fn ($str) => count(
         array_filter(
             (new ReflectionFunction($str))->getParameters(),
-            fn(ReflectionParameter $parameter) => $parameter->name === 'validate')
+            fn (ReflectionParameter $parameter) => $parameter->name === 'validate'
+        )
     )
 );
 
@@ -40,7 +42,7 @@ $promptFunctions = $validatableFunctions->filter(function ($str) {
 });
 
 $prompts = $promptFunctions->map(
-    fn($str) => Str::afterLast($str, '\\')
+    fn ($str) => Str::afterLast($str, '\\')
 );
 
 $promptOptions = $promptFunctions
@@ -48,7 +50,7 @@ $promptOptions = $promptFunctions
         function ($function) {
             $parameters = (new ReflectionFunction($function))->getParameters();
             return array_map(
-                fn(ReflectionParameter $parameter) => $parameter->getName(),
+                fn (ReflectionParameter $parameter) => $parameter->getName(),
                 $parameters
             );
         }
@@ -56,10 +58,11 @@ $promptOptions = $promptFunctions
     ->unique();
 
 $promptableFunctions = $functions->filter(
-    fn($str) => count(
+    fn ($str) => count(
         array_filter(
             (new ReflectionFunction($str))->getParameters(),
-            fn(ReflectionParameter $parameter) => $parameter->name === 'prompt')
+            fn (ReflectionParameter $parameter) => $parameter->name === 'prompt'
+        )
     )
 );
 

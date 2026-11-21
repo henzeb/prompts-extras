@@ -11,8 +11,7 @@ class Validate
         public readonly array   $messages = [],
         public readonly ?string $attribute = null,
         public readonly array   $data = [],
-    )
-    {
+    ) {
     }
 
     public static function with(
@@ -20,8 +19,7 @@ class Validate
         array  $messages = [],
         string $attribute = null,
         array  $data = [],
-    ): static
-    {
+    ): static {
         return new static(...func_get_args());
     }
 

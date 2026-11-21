@@ -70,7 +70,8 @@ class PromptsExtrasProvider extends ServiceProvider
 
     public function listenToCommandStart(): void
     {
-        Event::listen(CommandStarting::class,
+        Event::listen(
+            CommandStarting::class,
             function (CommandStarting $command) {
                 /**
                  * @var $command Command|CommandStarting

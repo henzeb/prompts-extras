@@ -3,6 +3,7 @@
 namespace Henzeb\Prompts\Concerns;
 
 use Mockery\MockInterface;
+
 use function stream_set_blocking;
 
 trait NonBlockingInput

@@ -10,20 +10,19 @@ use Laravel\Prompts\Prompt as LaravelPrompt;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+
 use function Henzeb\Prompts\format;
 use function Laravel\Prompts\text;
 
-
 it('Prompts do not have a value by default.', function () {
-    (new class extends Prompt {
-
+    (new class () extends Prompt {
     })->value();
 })->throws(RuntimeException::class);
 
 it('isFaked should return true when faked', function () {
     LaravelPrompt::fake();
 
-    $prompt = new class extends Prompt {
+    $prompt = new class () extends Prompt {
         public static function isFaked(): bool
         {
             return parent::isFaked();
@@ -34,7 +33,7 @@ it('isFaked should return true when faked', function () {
 });
 
 it('isFaked should return false when not faked', function () {
-    $prompt = new class extends Prompt {
+    $prompt = new class () extends Prompt {
         public static function isFaked(): bool
         {
             return parent::isFaked();
@@ -85,6 +84,6 @@ it('should render format with bold text', function () {
 
 it('should render format with green strikethrough text', function () {
     $formatted = format('bold text', 'green', 'strikethrough');
-    
+
     expect($formatted)->toBe('[9m[32mbold text[39m[29m');
 });

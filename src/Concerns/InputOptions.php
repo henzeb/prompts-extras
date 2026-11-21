@@ -5,6 +5,7 @@ namespace Henzeb\Prompts\Concerns;
 use Closure;
 use Henzeb\Prompts\Inputs;
 use Symfony\Component\Console\Input\InputOption;
+
 use function array_key_exists;
 use function Henzeb\Prompts\Input\validateOptionUsing;
 use function Henzeb\Prompts\validated;
@@ -26,8 +27,7 @@ trait InputOptions
         string|callable|null             $prompt = 'text',
         array                            $options = [],
         bool                             $submit = false,
-    ): void
-    {
+    ): void {
         $args = func_get_args();
 
         Inputs::definition()->addOption(new InputOption(...$args));
@@ -79,8 +79,7 @@ trait InputOptions
         callable|string $prompt = 'text',
         array           $options = [],
         bool            $submit = true,
-    ): void
-    {
+    ): void {
         if (!isset($validate) && !isset($options['required'])) {
             return;
         }

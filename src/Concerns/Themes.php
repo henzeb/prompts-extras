@@ -10,8 +10,7 @@ trait Themes
         string $renderer,
         string $theme = 'default',
         ?string $prompt = null
-    ): void
-    {
+    ): void {
         LaravelPrompts::$themes[$theme ?? 'default'][$prompt ?? static::class] = $renderer;
     }
 }

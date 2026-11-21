@@ -1,4 +1,5 @@
 <?php
+
 return [
     'accepted' => 'It must be accepted.',
     'accepted_if' => 'It must be accepted when :other is :value.',

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Lang;
 use Laravel\Prompts\Key;
 use Tests\Unit\Illuminate\Stubs\FirstTestCommand;
 use Tests\Unit\Illuminate\Stubs\SecondTestCommand;
+
 use function base_path;
 use function expect;
 use function Henzeb\Prompts\Input\addArgument;
@@ -21,7 +22,6 @@ use function Henzeb\Prompts\Input\option;
 use function it;
 use function resolve;
 use function trans;
-
 
 uses(ProviderTestCase::class);
 
@@ -72,7 +72,7 @@ it('´should validate early', function () {
 it('should isolate input and output between commands', function () {
 
     $this->registerCommands();
-    
+
     $buffer = new BufferedConsoleOutput();
     Artisan::call('second', ['engine' => 'electric', '--enable' => true], $buffer);
 
@@ -195,5 +195,3 @@ it('should publish the language files using tag', function () {
 })->tearDownTheEnvironmentUsing(function () {
     resolve(Filesystem::class)->deleteDirectory(base_path('lang/vendor'));
 });
-
-

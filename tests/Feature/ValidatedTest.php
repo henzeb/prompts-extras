@@ -3,6 +3,7 @@
 use Henzeb\Prompts\Prompt;
 use Laravel\Prompts\Key;
 use Laravel\Prompts\PasswordPrompt;
+
 use function Henzeb\Prompts\validated;
 use function Laravel\Prompts\confirm;
 
@@ -23,7 +24,7 @@ it('should prompt for required value', function () {
 
 it('should prompt for invalid value ', function () {
     Prompt::fake([Key::ENTER, 'value', Key::ENTER]);
-    $value = validated(null, 'my own label', validate: fn($value) => $value ? null : 'fails');
+    $value = validated(null, 'my own label', validate: fn ($value) => $value ? null : 'fails');
 
     Prompt::assertOutputContains('my own label');
 
@@ -69,14 +70,14 @@ it('should show required when submit is true and value null', function () {
 
 it('should not show validation error when submit is false and value is null', function () {
     Prompt::fake([Key::CTRL_C]);
-    validated(null, 'label', validate: fn() => 'validation error.', submit: false);
+    validated(null, 'label', validate: fn () => 'validation error.', submit: false);
 
     Prompt::assertOutputDoesntContain('validation error.');
 });
 
 it('should not show validation error when submit is false and value is not null', function () {
     Prompt::fake([Key::CTRL_C]);
-    validated('val', 'label', validate: fn() => 'validation error.', submit: false);
+    validated('val', 'label', validate: fn () => 'validation error.', submit: false);
 
     Prompt::assertOutputContains('validation error.');
 });
@@ -87,7 +88,7 @@ it('should throw error when prompt does not exist', function () {
 
 it('should show validation error when submit is true and value null', function () {
     Prompt::fake([Key::CTRL_C]);
-    validated(null, 'label', validate: fn() => 'validation error.', submit: true);
+    validated(null, 'label', validate: fn () => 'validation error.', submit: true);
 
     Prompt::assertOutputContains('validation error.');
 });
@@ -112,7 +113,7 @@ it('should override options with required', function () {
 it('should override options with validate', function () {
     Prompt::fake([Key::ENTER]);
 
-    validated(null, 'label', validate: fn() => 'failure', options: ['validate' => fn() => null]);
+    validated(null, 'label', validate: fn () => 'failure', options: ['validate' => fn () => null]);
 
 });
 
@@ -141,7 +142,7 @@ it('should use first item as default when tried with array', function () {
 
 it('should accept callables for prompt', function () {
     Prompt::fake([Key::CTRL_C]);
-    validated(null, 'label', required: true, prompt: fn() => confirm('my label'));
+    validated(null, 'label', required: true, prompt: fn () => confirm('my label'));
 
     Prompt::assertOutputContains('my label');
     Prompt::assertOutputContains('Yes');

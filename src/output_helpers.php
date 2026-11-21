@@ -25,8 +25,7 @@ function validated(
     callable|string $prompt = 'text',
     array           $options = [],
     bool            $submit = false,
-): mixed
-{
+): mixed {
     return (new Validated(...func_get_args()))->prompt();
 }
 

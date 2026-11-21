@@ -27,8 +27,7 @@ function addArgument(
     string|callable|null             $prompt = 'text',
     array                            $options = [],
     bool                             $submit = false,
-): void
-{
+): void {
     Inputs::addArgument(...func_get_args());
 }
 
@@ -47,8 +46,7 @@ function addOption(
     string|callable|null             $prompt = 'text',
     array                            $options = [],
     bool                             $submit = false,
-): void
-{
+): void {
     Inputs::addOption(...func_get_args());
 }
 
@@ -136,8 +134,7 @@ function validateOptionUsing(
     string|callable $prompt = 'text',
     array           $options = [],
     bool            $submit = false
-): void
-{
+): void {
     Inputs::validateOptionUsing(
         ...func_get_args()
     );
@@ -150,8 +147,7 @@ function validateArgumentUsing(
     string|callable|null $prompt = 'text',
     array                $options = [],
     bool                 $submit = false
-): void
-{
+): void {
     Inputs::validateArgumentUsing(
         ...func_get_args()
     );

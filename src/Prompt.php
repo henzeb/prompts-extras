@@ -54,8 +54,7 @@ abstract class Prompt extends LaravelPrompt
         string $locale = 'en',
         ?string $path = null,
         ?string $fallback = null
-    ): void
-    {
+    ): void {
         self::validateUsing(
             (new Validator(
                 new ValidatorFactory($locale, $path, $fallback),

@@ -11,11 +11,11 @@ echo format('this is red', 'red') . PHP_EOL;
 echo format('this is strikethrough', 'strikethrough') . PHP_EOL;
 
 echo format(
-        'this is a bold black text with cyan background',
-        'black',
-        'bold',
-        'bgCyan',
-    ) . PHP_EOL;
+    'this is a bold black text with cyan background',
+    'black',
+    'bold',
+    'bgCyan',
+) . PHP_EOL;
 
 table(
     [

@@ -13,6 +13,7 @@ use Illuminate\Validation\NestedRules;
 use Laravel\Prompts\Key;
 use Laravel\Prompts\Prompt as LaravelPrompt;
 use WeakMap;
+
 use function collect;
 use function Henzeb\Prompts\Input\argumentSet;
 use function Henzeb\Prompts\Input\optionSet;
@@ -20,7 +21,6 @@ use function is_array;
 use function is_string;
 use function str_replace;
 use function uniqid;
-
 
 class Validator
 {
@@ -33,8 +33,7 @@ class Validator
 
     public function __construct(
         private ?Factory $factory = null
-    )
-    {
+    ) {
         $this->factory ??= LaravelValidator::getFacadeRoot();
         $this->translator = $this->factory->getTranslator();
         $this->input = new WeakMap();
@@ -55,7 +54,8 @@ class Validator
         }
 
         if (!$rules
-            || !(is_string($rules)
+            || !(
+                is_string($rules)
                 || is_array($rules)
                 || $rules instanceof ConditionalRules
                 || $rules instanceof NestedRules
@@ -92,7 +92,7 @@ class Validator
 
         return collect(
             $errors->all()
-        )->map(fn(string $error) => $error . ' ')
+        )->map(fn (string $error) => $error . ' ')
             ->join(Key::ENTER . '  ⚠ ');
     }
 

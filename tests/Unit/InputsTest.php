@@ -3,6 +3,7 @@
 use Henzeb\Prompts\Inputs;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputDefinition;
+
 use function Henzeb\Prompts\Input\addArgument;
 use function Henzeb\Prompts\Input\addOption;
 
