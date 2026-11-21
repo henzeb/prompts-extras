@@ -15,6 +15,11 @@ function validateInputEarly(): void
 
 /**
  * Adds an argument to the definition.
+ *
+ * @param int<0, 7>|null $mode
+ * @param string|bool|int|float|array<mixed>|null $default
+ * @param Closure|array<mixed> $suggestedValues
+ * @param array{required?: bool|string, default?: mixed, ...} $options
  */
 function addArgument(
     string                           $name,
@@ -28,11 +33,17 @@ function addArgument(
     array                            $options = [],
     bool                             $submit = false,
 ): void {
-    Inputs::addArgument(...func_get_args());
+    Inputs::addArgument($name, $mode, $description, $default, $suggestedValues, $validate, $validateEarly, $prompt, $options, $submit);
 }
 
 /**
  * Adds an option to the definition.
+ *
+ * @param string|array<string>|null $shortcut
+ * @param int<0, 31>|null $mode
+ * @param string|bool|int|float|array<mixed>|null $default
+ * @param array<mixed>|Closure $suggestedValues
+ * @param array{required?: bool|string, default?: mixed, ...} $options
  */
 function addOption(
     string                           $name,
@@ -47,7 +58,7 @@ function addOption(
     array                            $options = [],
     bool                             $submit = false,
 ): void {
-    Inputs::addOption(...func_get_args());
+    Inputs::addOption($name, $shortcut, $mode, $description, $default, $suggestedValues, $validate, $validateEarly, $prompt, $options, $submit);
 }
 
 /**
@@ -123,7 +134,7 @@ function setOptions(array $options): void
  * @param mixed|null $validate
  * @param bool $validateEarly
  * @param string|callable $prompt
- * @param array $options
+ * @param array{required?: bool|string, default?: mixed, ...} $options
  * @param bool $submit
  * @return void
  */
@@ -135,11 +146,12 @@ function validateOptionUsing(
     array           $options = [],
     bool            $submit = false
 ): void {
-    Inputs::validateOptionUsing(
-        ...func_get_args()
-    );
+    Inputs::validateOptionUsing($name, $validate, $validateEarly, $prompt, $options, $submit);
 }
 
+/**
+ * @param array{required?: bool|string, default?: mixed, ...} $options
+ */
 function validateArgumentUsing(
     string               $name,
     mixed                $validate = null,
@@ -148,7 +160,5 @@ function validateArgumentUsing(
     array                $options = [],
     bool                 $submit = false
 ): void {
-    Inputs::validateArgumentUsing(
-        ...func_get_args()
-    );
+    Inputs::validateArgumentUsing($name, $validate, $validateEarly, $prompt, $options, $submit);
 }

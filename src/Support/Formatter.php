@@ -11,7 +11,9 @@ class Formatter
     public function render(string $text, string ...$formats): string
     {
         foreach ($formats as $format) {
-            $text = $this->$format($text);
+            $formatted = $this->$format($text);
+
+            $text = is_string($formatted) ? $formatted : $text;
         }
 
         return $text;

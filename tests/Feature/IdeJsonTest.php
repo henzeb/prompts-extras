@@ -27,12 +27,40 @@ function generateTemporaryIdeJsonFile(): void
     $process->run();
 }
 
-it('should generate current ide.json', function () {
+function expectIdeJsonContains(mixed $expected, mixed $actual, string $path = '$'): void
+{
+    if (!is_array($expected)) {
+        expect($actual)->toBe($expected, $path);
+
+        return;
+    }
+
+    expect($actual)->toBeArray($path);
+
+    if (array_is_list($expected)) {
+        foreach ($expected as $index => $value) {
+            if (is_array($value)) {
+                expectIdeJsonContains($value, $actual[$index] ?? null, $path . '[' . $index . ']');
+                continue;
+            }
+
+            expect($actual)->toContain($value);
+        }
+
+        return;
+    }
+
+    foreach ($expected as $key => $value) {
+        expect($actual)->toHaveKey($key);
+        expectIdeJsonContains($value, $actual[$key], $path . '.' . $key);
+    }
+}
+
+it('should contain everything generated for the installed prompts version in ide.json', function () {
     generateTemporaryIdeJsonFile();
 
-    expect(
-        file_get_contents(IdeJsonFile())
-    )->toBe(
-        file_get_contents(tempIdeJsonFile())
+    expectIdeJsonContains(
+        json_decode(file_get_contents(tempIdeJsonFile()), true),
+        json_decode(file_get_contents(ideJsonFile()), true),
     );
 });

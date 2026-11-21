@@ -12,9 +12,23 @@ use function Henzeb\Prompts\validated;
 
 trait InputOptions
 {
+    /**
+     * @var array<string, array<string, Closure(mixed): mixed>>
+     */
     protected static array $optionValidators = [];
+
+    /**
+     * @var array<string, array<string, Closure(mixed): mixed>>
+     */
     protected static array $validateEarlyOptions = [];
 
+    /**
+     * @param string|array<string>|null $shortcut
+     * @param int<0, 31>|null $mode
+     * @param string|bool|int|float|array<mixed>|null $default
+     * @param array<mixed>|Closure $suggestedValues
+     * @param array{required?: bool|string, default?: mixed, ...} $options
+     */
     public static function addOption(
         string                           $name,
         string|array|null                $shortcut = null,
@@ -28,13 +42,11 @@ trait InputOptions
         array                            $options = [],
         bool                             $submit = false,
     ): void {
-        $args = func_get_args();
-
-        Inputs::definition()->addOption(new InputOption(...$args));
+        Inputs::definition()->addOption(new InputOption($name, $shortcut, $mode, $description, $default, $suggestedValues));
 
         Inputs::bindDefinition();
 
-        validateOptionUsing($name, $validate, $validateEarly, $prompt, $options, $submit);
+        validateOptionUsing($name, $validate, $validateEarly, $prompt ?? 'text', $options, $submit);
     }
 
     public static function getOption(string $name, mixed $default = null): mixed
@@ -65,6 +77,9 @@ trait InputOptions
         }
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public static function setOptions(array $options): void
     {
         foreach ($options as $argument => $value) {
@@ -72,6 +87,9 @@ trait InputOptions
         }
     }
 
+    /**
+     * @param array{required?: bool|string, default?: mixed, ...} $options
+     */
     public static function validateOptionUsing(
         string          $name,
         mixed           $validate = null,
@@ -85,6 +103,7 @@ trait InputOptions
         }
 
         $validated = function (mixed $value) use ($name, $validate, $prompt, $options, $submit) {
+            /** @var array<string, array<string, mixed>> $validated */
             static $validated = [];
 
             $wasValidated = isset($validated[(string)static::currentCommand()][$name]);

@@ -3,6 +3,7 @@
 namespace Henzeb\Prompts;
 
 use Closure;
+use Laravel\Prompts\Prompt as LaravelPrompt;
 use Laravel\Prompts\Key;
 use Laravel\Prompts\MultiSearchPrompt;
 use Laravel\Prompts\MultiSelectPrompt;
@@ -14,13 +15,21 @@ class Validated extends Prompt
 {
     /**
      * contains prompts which name does not automatically map to an existing interface
+     *
+     * @var array<string, class-string<LaravelPrompt>>
      */
     protected static array $registeredPrompts = [
         'multiselect' => MultiSelectPrompt::class,
         'multisearch' => MultiSearchPrompt::class,
     ];
-    private string|Closure $prompt = 'text';
+    /**
+     * @var class-string<LaravelPrompt>|Closure
+     */
+    private string|Closure $prompt;
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function __construct(
         protected mixed    $value,
         protected string   $label,
@@ -48,7 +57,7 @@ class Validated extends Prompt
 
         if ($this->state !== 'submit') {
 
-            if (is_callable($this->prompt)) {
+            if ($this->prompt instanceof Closure) {
                 return ($this->prompt)($this->value);
             }
 
@@ -114,6 +123,9 @@ class Validated extends Prompt
         return $this->value;
     }
 
+    /**
+     * @return class-string<LaravelPrompt>|Closure
+     */
     private function determineCorrectPrompt(string|callable $prompt): string|Closure
     {
         $namespaces = [
@@ -128,19 +140,21 @@ class Validated extends Prompt
         $prompt = static::$registeredPrompts[strtolower($prompt)] ?? $prompt;
 
         foreach ($namespaces as $namespace) {
-            if (class_exists($prompt)) {
+            if (is_a($prompt, LaravelPrompt::class, true)) {
                 return $prompt;
             }
 
-            if (class_exists($namespace . ucfirst($prompt) . 'Prompt')) {
-                return $namespace . ucfirst($prompt) . 'Prompt';
+            $class = $namespace . ucfirst($prompt) . 'Prompt';
+
+            if (is_a($class, LaravelPrompt::class, true)) {
+                return $class;
             }
         }
 
         throw new RuntimeException(
             sprintf(
                 'Prompt `%s` does not exist.',
-                $this->prompt
+                $prompt
             )
         );
     }

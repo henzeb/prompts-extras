@@ -15,12 +15,14 @@ trait Interactivity
     }
     public static function updateInteractivity(): void
     {
-        $output = method_exists(static::output(), 'getOutput')
-            ? static::output()->getOutput()
-            : static::output();
+        $output = static::output();
+
+        if (method_exists($output, 'getOutput')) {
+            $output = $output->getOutput();
+        }
 
         LaravelPrompt::interactive(
-            match ($output::class) {
+            match (is_object($output) ? $output::class : null) {
                 BufferedOutput::class,
                 PromptsBufferedConsoleOutput::class,
                 BufferedConsoleOutput::class => false,

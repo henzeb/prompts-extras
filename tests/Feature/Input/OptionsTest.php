@@ -234,3 +234,11 @@ it('should return false when option not set', function () {
 
     expect(optionSet('test'))->toBeFalse();
 });
+
+it('should accept null as prompt', function () {
+    Inputs::fake(['--name' => 'Taylor']);
+
+    addOption('name', mode: InputOption::VALUE_REQUIRED, validate: fn () => null, prompt: null);
+
+    expect(option('name'))->toBe('Taylor');
+});

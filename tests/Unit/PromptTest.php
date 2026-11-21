@@ -65,7 +65,7 @@ it('should not fail when setting validator outside of laravel context', function
     Prompt::validateUsing(function () {
 
     });
-})->doesNotPerformAssertions();
+})->throwsNoExceptions();
 
 it('should setup illuminate validator', function (): void {
     Prompt::useLaravelValidator();

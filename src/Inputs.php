@@ -19,6 +19,9 @@ class Inputs
 
     protected static CurrentCommand $command;
 
+    /**
+     * @var array<string, ConsoleInput>
+     */
     protected static array $inputs = [];
 
     public static function setInput(Input $inputs): void
@@ -62,6 +65,9 @@ class Inputs
         static::$definitions = [];
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     public static function fake(array $parameters = []): void
     {
         static::setInput(

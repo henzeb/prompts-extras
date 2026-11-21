@@ -164,3 +164,7 @@ it('should set required to default true when prompt is select', function () {
         ]
     );
 });
+
+it('should name the requested prompt when it does not exist', function () {
+    validated('value', 'fake', prompt: 'doesNotExist');
+})->throws(RuntimeException::class, 'Prompt `doesNotExist` does not exist.');

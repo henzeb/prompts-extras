@@ -5,10 +5,13 @@
 - **Run a single test**: `vendor/bin/pest tests/path/to/TestFile.php`
 - **Run test with coverage**: `XDEBUG_MODE=coverage vendor/bin/pest --coverage-html coverage`
 - **Run mutation tests**: `XDEBUG_MODE=coverage vendor/bin/pest --mutate --covered-only`
+- **Format code**: `vendor/bin/pint`
+- **Check code style**: `vendor/bin/pint --test`
+- **Static analysis**: `vendor/bin/phpstan analyse` (level max, Larastan)
 
 ## Code Style Guidelines
-- **PHP Version**: 8.1+
-- **Formatting**: PSR-12 standard, 4 space indentation
+- **PHP Version**: 8.2+
+- **Formatting**: PSR-12 via Pint (`pint.json`), 4 space indentation
 - **Namespace**: `Henzeb\Prompts`
 - **Class Naming**: PascalCase, descriptive names
 - **Method Naming**: camelCase, descriptive of functionality

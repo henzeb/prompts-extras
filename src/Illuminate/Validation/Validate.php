@@ -2,10 +2,15 @@
 
 namespace Henzeb\Prompts\Illuminate\Validation;
 
-use function func_get_args;
-
+/**
+ * @phpstan-consistent-constructor
+ */
 class Validate
 {
+    /**
+     * @param array<string, string> $messages
+     * @param array<string, mixed> $data
+     */
     public function __construct(
         public readonly mixed   $rules,
         public readonly array   $messages = [],
@@ -14,13 +19,17 @@ class Validate
     ) {
     }
 
+    /**
+     * @param array<string, string> $messages
+     * @param array<string, mixed> $data
+     */
     public static function with(
         mixed  $rules,
         array  $messages = [],
-        string $attribute = null,
+        ?string $attribute = null,
         array  $data = [],
     ): static {
-        return new static(...func_get_args());
+        return new static($rules, $messages, $attribute, $data);
     }
 
     public function __toString(): string

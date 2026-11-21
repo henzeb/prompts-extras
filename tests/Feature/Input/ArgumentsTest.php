@@ -217,3 +217,20 @@ it('should return false when argument not set', function () {
 
     expect(optionSet('test'))->toBeFalse();
 });
+
+it('should prompt using a closure', function () {
+    Prompt::fake();
+    Inputs::fake();
+
+    addArgument('name', validate: fn () => 'invalid', prompt: fn () => 'Taylor', submit: true);
+
+    expect(argument('name'))->toBe('Taylor');
+});
+
+it('should accept null as prompt', function () {
+    Inputs::fake(['name' => 'Taylor']);
+
+    addArgument('name', validate: fn () => null, prompt: null);
+
+    expect(argument('name'))->toBe('Taylor');
+});

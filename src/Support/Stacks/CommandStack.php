@@ -4,6 +4,9 @@ namespace Henzeb\Prompts\Support\Stacks;
 
 abstract class CommandStack
 {
+    /**
+     * @var list<string>
+     */
     public static array $commands = [];
 
     public static function add(string $command): void
@@ -11,7 +14,7 @@ abstract class CommandStack
         self::$commands[] = $command;
     }
 
-    public static function pop(): ?CurrentCommand
+    public static function pop(): CurrentCommand
     {
         array_pop(self::$commands);
 
@@ -25,9 +28,11 @@ abstract class CommandStack
 
     public static function current(): CurrentCommand
     {
+        $command = end(static::$commands);
+
         return new CurrentCommand(
             count(static::$commands),
-            end(static::$commands)
+            $command === false ? '' : $command
         );
     }
 }

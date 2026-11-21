@@ -111,7 +111,9 @@ class Watch extends Prompt
     {
         $renderer = static::getRenderer();
 
-        return $renderer($this->render, static::output());
+        $output = $renderer($this->render, static::output());
+
+        return is_string($output) ? $output : '';
     }
 
     /**

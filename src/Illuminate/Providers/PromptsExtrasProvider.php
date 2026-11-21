@@ -2,6 +2,7 @@
 
 namespace Henzeb\Prompts\Illuminate\Providers;
 
+use Closure;
 use Henzeb\Prompts\Illuminate\Validation\Validator;
 use Henzeb\Prompts\Inputs;
 use Henzeb\Prompts\Prompt;
@@ -14,8 +15,10 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Prompts\Prompt as LaravelPrompt;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\Input;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class PromptsExtrasProvider extends ServiceProvider
@@ -72,14 +75,15 @@ class PromptsExtrasProvider extends ServiceProvider
     {
         Event::listen(
             CommandStarting::class,
-            function (CommandStarting $command) {
-                /**
-                 * @var $command Command|CommandStarting
-                 */
-                $command = Artisan::all()[$command->command];
+            function (CommandStarting $event) {
+                $command = Artisan::all()[$event->command] ?? null;
+
+                if (!$command instanceof SymfonyCommand) {
+                    return;
+                }
 
                 $command->setCode(
-                    (function (Input $input, OutputInterface $output) {
+                    Closure::bind(function (InputInterface $input, OutputInterface $output): int {
 
                         Prompt::ValidateUsing(
                             (new Validator())(...)
@@ -95,15 +99,17 @@ class PromptsExtrasProvider extends ServiceProvider
 
                         Prompt::updateInteractivity();
 
-                        Inputs::setInput($input);
+                        if ($input instanceof Input) {
+                            Inputs::setInput($input);
+                        }
 
                         Inputs::setDefinition($this->getDefinition());
 
                         Inputs::validateEarly();
 
-                        $this->execute($input, $output);
+                        return $this->execute($input, $output);
 
-                    })->bindTo($command, Command::class)
+                    }, $command, Command::class)
                 );
             }
         );
@@ -118,8 +124,10 @@ class PromptsExtrasProvider extends ServiceProvider
                     Inputs::setCommand(CommandStack::pop());
                 }
 
-                if (OutputStack::hasOutputs()) {
-                    Prompt::setOutput(OutputStack::pop());
+                $output = OutputStack::hasOutputs() ? OutputStack::pop() : null;
+
+                if ($output !== null) {
+                    Prompt::setOutput($output);
                     Prompt::updateInteractivity();
                 }
             }

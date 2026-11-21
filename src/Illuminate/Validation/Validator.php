@@ -6,12 +6,13 @@ use Henzeb\Prompts\Inputs;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Validator as LaravelValidator;
 use Illuminate\Translation\CreatesPotentiallyTranslatedStrings;
-use Illuminate\Translation\Translator;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Validation\ConditionalRules;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\NestedRules;
 use Laravel\Prompts\Key;
 use Laravel\Prompts\Prompt as LaravelPrompt;
+use RuntimeException;
 use WeakMap;
 
 use function collect;
@@ -26,15 +27,28 @@ class Validator
 {
     use CreatesPotentiallyTranslatedStrings;
 
-    public const NAMESPACE = 'prompts/extras::';
+    /**
+     * @var string
+     */
+    public const TRANSLATION_NAMESPACE = 'prompts/extras::';
 
+    /**
+     * @var WeakMap<LaravelPrompt, array<string, mixed>>
+     */
     protected WeakMap $input;
     protected Translator $translator;
 
-    public function __construct(
-        private ?Factory $factory = null
-    ) {
-        $this->factory ??= LaravelValidator::getFacadeRoot();
+    private Factory $factory;
+
+    public function __construct(?Factory $factory = null)
+    {
+        $factory ??= LaravelValidator::getFacadeRoot();
+
+        if (!$factory instanceof Factory) {
+            throw new RuntimeException(sprintf('The validator must be an instance of %s.', Factory::class));
+        }
+
+        $this->factory = $factory;
         $this->translator = $this->factory->getTranslator();
         $this->input = new WeakMap();
     }
@@ -44,7 +58,7 @@ class Validator
         $rules = $prompt->validate;
         $messages = [];
         $data = [];
-        $attribute = $this->translator->get(static::NAMESPACE . 'prompts.attribute');
+        $attribute = $this->translator->get(static::TRANSLATION_NAMESPACE . 'prompts.attribute');
 
         if ($prompt->validate instanceof Validate) {
             $rules = $prompt->validate->rules;
@@ -96,6 +110,9 @@ class Validator
             ->join(Key::ENTER . '  ⚠ ');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getInput(LaravelPrompt $prompt): array
     {
         if (isset($this->input[$prompt])) {
@@ -119,8 +136,12 @@ class Validator
         return $this->input[$prompt];
     }
 
+    /**
+     * @param array<string, string> $messages
+     * @return array<mixed>
+     */
     private function getMessages(array $messages): array
     {
-        return $messages + (array)$this->translator->get(static::NAMESPACE . 'validation');
+        return $messages + (array)$this->translator->get(static::TRANSLATION_NAMESPACE . 'validation');
     }
 }

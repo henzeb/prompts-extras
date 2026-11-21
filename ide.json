@@ -7,6 +7,8 @@
                 {
                     "functionFqn": [
                         "Laravel\\Prompts\\text",
+                        "Laravel\\Prompts\\autocomplete",
+                        "Laravel\\Prompts\\number",
                         "Laravel\\Prompts\\textarea",
                         "Laravel\\Prompts\\password",
                         "Laravel\\Prompts\\select",
@@ -15,6 +17,7 @@
                         "Laravel\\Prompts\\suggest",
                         "Laravel\\Prompts\\search",
                         "Laravel\\Prompts\\multisearch",
+                        "Laravel\\Prompts\\datatable",
                         "Henzeb\\Prompts\\validated",
                         "Henzeb\\Prompts\\Input\\addArgument",
                         "Henzeb\\Prompts\\Input\\addOption",
@@ -41,6 +44,8 @@
                 {
                     "functionFqn": [
                         "Laravel\\Prompts\\text",
+                        "Laravel\\Prompts\\autocomplete",
+                        "Laravel\\Prompts\\number",
                         "Laravel\\Prompts\\textarea",
                         "Laravel\\Prompts\\password",
                         "Laravel\\Prompts\\select",
@@ -49,6 +54,7 @@
                         "Laravel\\Prompts\\suggest",
                         "Laravel\\Prompts\\search",
                         "Laravel\\Prompts\\multisearch",
+                        "Laravel\\Prompts\\datatable",
                         "Henzeb\\Prompts\\validated",
                         "Henzeb\\Prompts\\Input\\addArgument",
                         "Henzeb\\Prompts\\Input\\addOption",
@@ -79,6 +85,8 @@
             "options": {
                 "strings": [
                     "text",
+                    "autocomplete",
+                    "number",
                     "textarea",
                     "password",
                     "select",
@@ -86,7 +94,8 @@
                     "confirm",
                     "suggest",
                     "search",
-                    "multisearch"
+                    "multisearch",
+                    "datatable"
                 ]
             },
             "condition": [
@@ -118,11 +127,17 @@
                     "validate",
                     "hint",
                     "transform",
-                    "rows",
                     "options",
+                    "min",
+                    "max",
+                    "step",
+                    "rows",
                     "scroll",
+                    "info",
                     "yes",
-                    "no"
+                    "no",
+                    "headers",
+                    "filter"
                 ]
             },
             "condition": [

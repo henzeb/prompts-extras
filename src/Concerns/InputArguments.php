@@ -12,10 +12,22 @@ use function Henzeb\Prompts\validated;
 
 trait InputArguments
 {
+    /**
+     * @var array<string, array<string, Closure(mixed): mixed>>
+     */
     protected static array $argumentValidators = [];
 
+    /**
+     * @var array<string, array<string, Closure(mixed): mixed>>
+     */
     protected static array $validateEarlyArguments = [];
 
+    /**
+     * @param int<0, 7>|null $mode
+     * @param string|bool|int|float|array<mixed>|null $default
+     * @param Closure|array<mixed> $suggestedValues
+     * @param array{required?: bool|string, default?: mixed, ...} $options
+     */
     public static function addArgument(
         string                           $name,
         ?int                             $mode = null,
@@ -28,9 +40,7 @@ trait InputArguments
         array                            $options = [],
         bool                             $submit = false,
     ): void {
-        $args = func_get_args();
-
-        Inputs::definition()->addArgument(new InputArgument(...$args));
+        Inputs::definition()->addArgument(new InputArgument($name, $mode, $description, $default, $suggestedValues));
 
         Inputs::bindDefinition();
 
@@ -50,6 +60,9 @@ trait InputArguments
     }
 
 
+    /**
+     * @param array<string, mixed> $arguments
+     */
     public static function setArguments(array $arguments): void
     {
         foreach ($arguments as $argument => $value) {
@@ -74,11 +87,14 @@ trait InputArguments
         return $value ?? $default;
     }
 
+    /**
+     * @param array{required?: bool|string, default?: mixed, ...} $options
+     */
     public static function validateArgumentUsing(
         string  $name,
         mixed   $validate = null,
         bool    $validateEarly = false,
-        ?string $prompt = 'text',
+        string|callable|null $prompt = 'text',
         array   $options = [],
         bool    $submit = false,
     ): void {
@@ -89,6 +105,7 @@ trait InputArguments
             $options,
             $submit
         ) {
+            /** @var array<string, array<string, mixed>> $validated */
             static $validated = [];
 
             $wasValidated = isset($validated[(string)static::currentCommand()][$name]);
@@ -108,7 +125,7 @@ trait InputArguments
 
             $options['required'] = array_key_exists('required', $options) ? $options['required'] : $required;
 
-            $value = validated($value, $name, $options['required'], $validate, $prompt, $options, $submit);
+            $value = validated($value, $name, $options['required'], $validate, $prompt ?? 'text', $options, $submit);
 
             return $validated[(string)static::currentCommand()][$name] = $value;
         };

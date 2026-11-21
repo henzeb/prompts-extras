@@ -16,6 +16,8 @@ function watch(callable $render, ?int $interval = 2): void
 
 /**
  * Returns a validated value or prompts for input if value doesn't validate.
+ *
+ * @param array<string, mixed> $options
  */
 function validated(
     mixed           $value,

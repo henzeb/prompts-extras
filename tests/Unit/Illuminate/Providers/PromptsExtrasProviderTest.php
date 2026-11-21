@@ -4,13 +4,21 @@ namespace Tests\Unit\Illuminate\Providers;
 
 use Henzeb\Prompts\Illuminate\Providers\PromptsExtrasProvider;
 use Henzeb\Prompts\Illuminate\Validation\Validate;
+use Henzeb\Prompts\Illuminate\Validation\Validator;
 use Henzeb\Prompts\Inputs;
 use Henzeb\Prompts\Prompt;
 use Illuminate\Console\BufferedConsoleOutput;
+use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Laravel\Prompts\Key;
+use RuntimeException;
+use stdClass;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Tests\Unit\Illuminate\Stubs\FirstTestCommand;
 use Tests\Unit\Illuminate\Stubs\SecondTestCommand;
 
@@ -43,7 +51,7 @@ it('should configure definitions', function () {
 
     $command->getDefinition()->getOption('confirm');
 
-})->doesNotPerformAssertions();
+})->throwsNoExceptions();
 
 it('should isolate command definitions', function () {
 
@@ -194,4 +202,20 @@ it('should publish the language files using tag', function () {
 
 })->tearDownTheEnvironmentUsing(function () {
     resolve(Filesystem::class)->deleteDirectory(base_path('lang/vendor'));
+});
+
+it('should return the exit code of the command', function () {
+    Artisan::command('exits', fn () => 3);
+
+    $this->artisan('exits')->assertExitCode(3);
+});
+
+it('should ignore unknown commands when starting', function () {
+    Event::dispatch(new CommandStarting('does-not-exist', new ArrayInput([]), new BufferedOutput()));
+})->throwsNoExceptions();
+
+it('should require a validation factory', function () {
+    ValidatorFacade::swap(new stdClass());
+
+    expect(fn () => new Validator())->toThrow(RuntimeException::class);
 });

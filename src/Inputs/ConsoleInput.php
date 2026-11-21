@@ -47,16 +47,27 @@ class ConsoleInput extends Input
         return $this->input->getFirstArgument();
     }
 
+    /**
+     * @param string|array<string> $values
+     */
     public function hasParameterOption(array|string $values, bool $onlyParams = false): bool
     {
         return $this->input->hasParameterOption($values, $onlyParams);
     }
 
+    /**
+     * @param string|array<string> $values
+     * @param string|bool|int|float|array<mixed>|null $default
+     */
     public function getParameterOption(array|string $values, float|array|bool|int|string|null $default = false, bool $onlyParams = false): mixed
     {
         return $this->input->getParameterOption($values, $default, $onlyParams);
     }
 
+    /**
+     * @param array<mixed> $arguments
+     * @return mixed
+     */
     public function __call(string $name, array $arguments)
     {
         return $this->input->$name(...$arguments);
